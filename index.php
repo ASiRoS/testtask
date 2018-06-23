@@ -10,7 +10,7 @@
 </head>
 <body>
 <div class="container mt-4">
-    <form action="index.html" method="post">
+    <form action="register.php" method="post">
         <fieldset class="form-group">
             <legend>Register</legend>
             <div class="form-group form-row">
