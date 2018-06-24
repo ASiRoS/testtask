@@ -1,61 +1,44 @@
-<?php
-require_once 'db.php';
-require_once 'helpers.php';
-require_once 'image_upload.php';
-
-if($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $db = connect();
-
-    $errors = [];
-
-    $user['login'] = $_POST['login'] ?? '';
-    $user['email'] = $_POST['email'] ?? '';
-    $user['password'] = $_POST['password'];
-    $confirm_password = $_POST['confirm_password'] ?? '';
-    if(!check_login($user['login'])) {
-        $errors[] = 'Login must contain only letters A-Z and numbers.';
-    }
-    if(!check_email($user['email'])) {
-        $errors[] = 'Invalid email address';
-    }
-
-    if(!check_password($user['password'])) {
-        $errors[] = 'Password must contain at least 6 characters';
-    } elseif(!password_confirm($user['password'], $confirm_password)) {
-        $errors[] = 'Passwords doesn\'t match';
-    }
-
-    if(!empty($errors)) {
-        print_r($errors);
-    } else {
-        if(login_exists($db, $user['login'])) {
-            $errors[] = 'This login already exists.';
-        }
-        if(email_exists($db, $user['email'])) {
-            $errors[] = 'This email already exists';
-        }
-        if(!empty($errors)) {
-            print_r($errors);
-        } else {
-            add_user($db, $user);
-        }
-    }
-
-    mysqli_close($db);
-}
-
-function add_user($db, $user) {
-    if(in_array('', $user)) {
-        throw new Exception('One or more fields are empty.');
-    }
-    $stmt = mysqli_prepare($db, 'INSERT INTO users(login, email, password, avatar) VALUES (?, ?, ?, ?)');
-    if(!empty($_FILES['avatar'])) {
-        $image_name = image_upload($_FILES['avatar']);
-    } else {
-        $image_name = '';
-    }
-    mysqli_stmt_bind_param($stmt, 'ssss', $user['login'], $user['email'], $user['password'], $image_name);
-    $is_success = mysqli_stmt_execute($stmt);
-    mysqli_stmt_close($stmt);
-    return $is_success;
-}
+<?php require_once 'bootstrap.php'; ?>
+<?php ob_start(); ?>
+<form class="col-md-3 border rounded" action="register.php" method="post" enctype="multipart/form-data">
+    <fieldset class="form-group">
+        <legend>Register</legend>
+        <div class="form-group form-row">
+            <div class="form-group col-auto">
+                <label class="form-control-label">
+                    Enter your login:
+                    <input class="form-control" type="text" name="login">
+                </label>
+            </div> <!-- form-group -->
+            <div class="form-group col-auto">
+                <label class="form-control-label">
+                    Enter your email:
+                    <input class="form-control" type="email" name="email">
+                </label>
+                <small class="form-text text-muted">We'll never share your email.</small>
+            </div> <!-- form-group -->
+        </div> <!-- form-group -->
+        <div class="form-group form-row">
+            <div class="form-group col-auto">
+                <label class="form-control-label">
+                    Enter your password:
+                    <input class="form-control" type="password" name="password">
+                </label>
+            </div> <!-- form-group -->
+            <div class="form-group col-auto">
+                <label class="form-control-label">
+                    Confirm your password:
+                    <input class="form-control" type="password" name="confirm_password">
+                </label>
+            </div> <!-- form-group -->
+        </div> <!-- form-group -->
+        <div class="form-group">
+            <input type="file" accept="image/*" name="avatar">
+        </div>
+        <button class="btn btn-primary" type="submit">Register</button>
+    </fieldset> <!-- fieldset -->
+</form>
+<p class="col-md-3 border rounded mt-3">Already registered? <a href="login.php">Log in.</a></p>
+<?php $content = ob_get_clean();
+require_once 'layout.php';
+?>
