@@ -1,7 +1,5 @@
 <?php
-require 'helpers.php';
-require 'db.php';
-require 'session.php';
+require_once 'bootstrap.php';
 
 if($_SERVER['REQUEST_METHOD'] == 'POST') {
     // Data is recevied login or email
@@ -10,9 +8,11 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
     $user = get_user_by_login_or_email($data);
     if($user === null || $user['password'] !== $password) {
         $errors[] = 'Login or password is incorrect';
+        $_SESSION['errors'] = $errors;
+        $_SESSION['entered_login'] = $user['login'];
+        redirect('login.php');
     } else {
         $_SESSION['login'] = $user['login'];
     }
-    header('Location: login.php');
-    die;
+    redirect('login.php');
 }

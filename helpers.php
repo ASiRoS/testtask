@@ -26,3 +26,8 @@ function check_password($password) {
 function password_confirm($password, $confirm_password)  {
     return $password === $confirm_password;
 }
+
+function redirect($url) {
+    header('Location: '. $url);
+    die;
+}

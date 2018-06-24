@@ -1,7 +1,5 @@
 <?php
-require_once 'db.php';
-require_once 'helpers.php';
-require_once 'image_upload.php';
+require_once 'bootstrap.php';
 
 if($_SERVER['REQUEST_METHOD'] == 'POST') {
     $db = connect();
@@ -26,19 +24,20 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 
     if(!empty($errors)) {
-        print_r($errors);
+        $_SESSION['errors'] = $errors;
+        redirect('register.php');
+    }
+    if(login_exists($db, $user['login'])) {
+        $errors[] = 'This login already exists.';
+    }
+    if(email_exists($db, $user['email'])) {
+        $errors[] = 'This email already exists';
+    }
+    if(empty($errors)) {
+        add_user($db, $user);
     } else {
-        if(login_exists($db, $user['login'])) {
-            $errors[] = 'This login already exists.';
-        }
-        if(email_exists($db, $user['email'])) {
-            $errors[] = 'This email already exists';
-        }
-        if(!empty($errors)) {
-            print_r($errors);
-        } else {
-            add_user($db, $user);
-        }
+        $_SESSION['errors'] = $errors;
+        redirect('register.php');
     }
 
     mysqli_close($db);
