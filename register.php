@@ -1,5 +1,6 @@
 <?php
 require_once 'db.php';
+require_once 'image_upload.php';
 
 if($_SERVER['REQUEST_METHOD'] == 'POST') {
     $db = connect();
@@ -11,7 +12,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
     $user['password'] = $_POST['password'];
     $confirm_password = $_POST['confirm_password'] ?? '';
     if(!check_login($user['login'])) {
-        $errors[] = 'Login must contain only letters from A to Z.';
+        $errors[] = 'Login must contain only letters A-Z and numbers.';
     }
     if(!check_email($user['email'])) {
         $errors[] = 'Entered email is not correct';
@@ -35,7 +36,9 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
         if(!empty($errors)) {
             print_r($errors);
         } else {
-            add_user($db, $user);
+            if(add_user($db, $user) === true) {
+                image_upload($_FILES['avatar']);
+            }
         }
     }
 
@@ -43,7 +46,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
 }
 
 function check_login($login) {
-    return (preg_match("/^[a-zA-Z ]*$/", $login));
+    return (preg_match("/^[a-zA-Z1-9]*$/", $login));
 
 }
 
@@ -75,6 +78,7 @@ function add_user($db, $user) {
     }
     $stmt = mysqli_prepare($db, 'INSERT INTO users(login, email, password) VALUES (?, ?, ?)');
     mysqli_stmt_bind_param($stmt, 'sss', $user['login'], $user['email'], $user['password']);
-    mysqli_stmt_execute($stmt);
+    $is_success = mysqli_stmt_execute($stmt);
     mysqli_stmt_close($stmt);
+    return $is_success;
 }
