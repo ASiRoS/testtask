@@ -1,5 +1,6 @@
 <?php
 require_once 'db.php';
+require_once 'helpers.php';
 require_once 'image_upload.php';
 
 if($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -15,7 +16,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
         $errors[] = 'Login must contain only letters A-Z and numbers.';
     }
     if(!check_email($user['email'])) {
-        $errors[] = 'Entered email is not correct';
+        $errors[] = 'Invalid email address';
     }
 
     if(!check_password($user['password'])) {
@@ -41,33 +42,6 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 
     mysqli_close($db);
-}
-
-function check_login($login) {
-    return (preg_match("/^[a-zA-Z1-9]*$/", $login));
-
-}
-
-function login_exists($db, $login) {
-    $query = mysqli_query($db, "SELECT * FROM users WHERE login='$login'");
-    return (mysqli_num_rows($query) > 0);
-}
-
-function check_email($email) {
-    return filter_var($email, FILTER_VALIDATE_EMAIL);
-}
-
-function email_exists($db, $email) {
-    $query = mysqli_query($db, "SELECT * FROM users WHERE email='$email'");
-    return (mysqli_num_rows($query) > 0);
-}
-
-function check_password($password) {
-    return strlen($password) >= 6;
-}
-
-function password_confirm($password, $confirm_password)  {
-    return $password === $confirm_password;
 }
 
 function add_user($db, $user) {
