@@ -36,9 +36,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
         if(!empty($errors)) {
             print_r($errors);
         } else {
-            if(add_user($db, $user) === true) {
-                image_upload($_FILES['avatar']);
-            }
+            add_user($db, $user);
         }
     }
 
@@ -76,8 +74,13 @@ function add_user($db, $user) {
     if(in_array('', $user)) {
         throw new Exception('One or more fields are empty.');
     }
-    $stmt = mysqli_prepare($db, 'INSERT INTO users(login, email, password) VALUES (?, ?, ?)');
-    mysqli_stmt_bind_param($stmt, 'sss', $user['login'], $user['email'], $user['password']);
+    $stmt = mysqli_prepare($db, 'INSERT INTO users(login, email, password, avatar) VALUES (?, ?, ?, ?)');
+    if(!empty($_FILES['avatar'])) {
+        $image_name = image_upload($_FILES['avatar']);
+    } else {
+        $image_name = '';
+    }
+    mysqli_stmt_bind_param($stmt, 'ssss', $user['login'], $user['email'], $user['password'], $image_name);
     $is_success = mysqli_stmt_execute($stmt);
     mysqli_stmt_close($stmt);
     return $is_success;
