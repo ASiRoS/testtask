@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="<?=get_current_language()?>">
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -10,7 +10,20 @@
 </head>
 <body>
 <div class="container mt-4">
-<?=$content?>
+    <div class="form-group">
+      <label for="select-language"><?=get_translate('select_language')?>:
+          <form action="<?=$_SERVER['REQUEST_URI']?>" method="post">
+          <select class="form-control" onchange="this.form.submit()" name="language">
+            <option value=""></option>
+            <?php foreach(get_existing_languages() as $lang): ?>
+            <option value="<?=$lang?>"><?=get_translate($lang)?></option>
+            <?php endforeach; ?>
+          </select>
+          </form>
+      </label>
+    </div>
+
+    <?=$content?>
 </div><!-- container -->
 </body>
 </html>

@@ -1,7 +1,7 @@
 <?php
 
 return [
-    'error_login'           => 'Login or password is incorrect';
+    'error_login'           => 'Login or password is incorrect',
     'error_incorrect_login' => 'Login must contain only letters A-Z and numbers',
     'error_invalid_email'   => 'Invalid email address',
     'error_password_length' => 'Password must contain at least 6 characters',
@@ -14,4 +14,13 @@ return [
     'login'                 => 'Log in',
     'logout'                => 'Log out',
     'logged_in'             => 'You\'re logged in as',
+    'register'              => 'Register',
+    'enter_login'           => 'Enter your login:',
+    'enter_email'           => 'Enter your email:',
+    'never_share_email'     => 'We\'ll never share your email.',
+    'confirm_password'      => 'Confirm your password:',
+    'already_registered'    => 'Already registered? <a href="login.php">Log in.</a>',
+    'select_language'       => 'Select language',
+    'en'                    => 'English',
+    'ru'                    => 'Russian'
 ];

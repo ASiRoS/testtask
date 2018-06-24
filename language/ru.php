@@ -13,5 +13,14 @@ return [
     'enter_login_or_email'  => 'Введите логин или email:',
     'login'                 => 'Войти',
     'logout'                => 'Выйти',
-    'logged_in'             => 'Вы вошли как', 
+    'logged_in'             => 'Вы вошли как',
+    'register'              => 'Зарегестрироваться',
+    'enter_login'           => 'Введите логин:',
+    'enter_email'           => 'Введите email:',
+    'never_share_email'     => 'Мы никому не передадим ваш email.',
+    'confirm_password'      => 'Подтвердите пароль:',
+    'already_registered'    => 'Уже зарегестрированы? <a href="login.php">Войдите.</a>',
+    'select_language'       => 'Выберите язык',
+    'en'                    => 'Английский',
+    'ru'                    => 'Русский'
 ];
