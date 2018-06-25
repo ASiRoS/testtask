@@ -38,6 +38,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
     if(empty($errors)) {
         if(add_user($db, $user)) {
             $_SESSION['success_registration'] = true;
+            redirect('login.php');
         } else {
             $_SESSION['error_went_wrong'] = true;
         }

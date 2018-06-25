@@ -38,6 +38,7 @@ function add_user($db, $user) {
     } else {
         $image_name = '';
     }
+    $user['password'] = crypt($user['password']);
     mysqli_stmt_bind_param($stmt, 'ssss', $user['login'], $user['email'], $user['password'], $image_name);
     $is_success = mysqli_stmt_execute($stmt);
     mysqli_stmt_close($stmt);

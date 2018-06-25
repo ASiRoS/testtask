@@ -6,7 +6,8 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
     $data = $_POST['data'] ?? '';
     $password = $_POST['password'];
     $user = get_user_by_login_or_email($data);
-    if($user === null || $user['password'] !== $password) {
+    if($user === null) {
+        if(crypt($user['password'], $password) !== $password)
         $errors[] = 'Login or password is incorrect';
         $_SESSION['errors'] = $errors;
         $_SESSION['entered_login'] = $user['login'];
