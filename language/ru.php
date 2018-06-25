@@ -1,7 +1,7 @@
 <?php
 
 return [
-    'error_login'           => 'Логин(email) или пароль неверные',
+    'error_login'           => 'Логин или пароль неверные',
     'error_login_invalid'   => 'Логин должен содержать только буквы A-Z и цифры, и не может быть пустым',
     'error_email_invalid'   => 'Некорректный email адрес',
     'error_password_length' => 'Пароль должен содержать минимум 6 символов',

@@ -7,7 +7,7 @@
     <img src="<?=UPLOAD_FOLDER.get_user_avatar_by_login($_SESSION['login'])?>" alt="avatar" width="150" height="150">
 </div>
 <? else: ?>
-<form class="col-md-3 border rounded" action="login-handler.php" method="post">
+<form class="col-md-3 border rounded" id="login-form" action="login-handler.php" method="post">
     <fieldset class="form-group">
         <legend><?=get_translate('login');?></legend>
         <div class="form-group is-valid">
@@ -24,7 +24,7 @@
             </label>
         </div> <!-- form-group -->
         <button class="btn btn-primary" type="submit"><?=get_translate('login');?></button>
-        <?=return_message('<span class="form-text">'.get_translate('error_login').'</span>')?>
+        <?=return_message('<small class="invalid-feedback">'.get_translate('error_login').'</small>')?>
     </fieldset> <!-- fieldset -->
 </form>
 <p class="col-md-3 border rounded mt-3"><?=get_translate('create_account')?></p>

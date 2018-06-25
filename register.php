@@ -6,7 +6,7 @@
     alert('<?=get_translate('success_registration');?>');
 </script>
 <?php endif; ?>
-<form class="col-md-3 border rounded" action="register-handler.php" method="post" enctype="multipart/form-data">
+<form class="col-md-3 border rounded" id="register-form" action="register-handler.php" method="post" enctype="multipart/form-data">
     <fieldset class="form-group">
         <legend><?=get_translate('register')?></legend>
         <div class="form-group form-row">

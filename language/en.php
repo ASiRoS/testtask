@@ -1,7 +1,7 @@
 <?php
 
 return [
-    'error_login'           => 'Login(email) or password is incorrect',
+    'error_login'           => 'Login or password is incorrect',
     'error_login_invalid' => 'Login must contain only letters A-Z and numbers and can not be blank',
     'error_email_invalid'   => 'Invalid email address',
     'error_password_length' => 'Password must contain at least 6 characters',
