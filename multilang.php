@@ -30,7 +30,12 @@ function get_existing_languages() {
 }
 
 $translation = require_once 'language/'.get_current_language().'.php';
+
 function get_translate($code) {
     global $translation;
     return $translation[$code] ?? '';
+}
+
+function get_translated_error($code) {
+    return get_translate('error_'.$code);
 }

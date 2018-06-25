@@ -11,16 +11,18 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
     $user['password'] = $_POST['password'];
     $confirm_password = $_POST['confirm_password'] ?? '';
     if(!check_login($user['login'])) {
-        $errors[] = 'Login must contain only letters A-Z and numbers.';
+        $errors['login_invalid'] = true;
     }
     if(!check_email($user['email'])) {
-        $errors[] = 'Invalid email address';
+        $errors['email_invalid'] = true;
     }
 
     if(!check_password($user['password'])) {
-        $errors[] = 'Password must contain at least 6 characters';
-    } elseif(!password_confirm($user['password'], $confirm_password)) {
-        $errors[] = 'Passwords doesn\'t match';
+        $errors['password_length'] = true;
+    }
+
+    if(!password_confirm($user['password'], $confirm_password)) {
+        $errors['password_match'] = true;
     }
 
     if(!empty($errors)) {
@@ -28,17 +30,19 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
         redirect('register.php');
     }
     if(login_exists($db, $user['login'])) {
-        $errors[] = 'This login already exists.';
+        $errors['login_exists'] = true;
     }
     if(email_exists($db, $user['email'])) {
-        $errors[] = 'This email already exists';
+        $errors['email_exists'] = true;
     }
     if(empty($errors)) {
-        add_user($db, $user);
+        if(add_user($db, $user)) {
+            $_SESSION['success_registration'] = true;
+        } else {
+            $_SESSION['error_went_wrong'] = true;
+        }
     } else {
         $_SESSION['errors'] = $errors;
-        redirect('register.php');
     }
-
-    mysqli_close($db);
+    redirect('register.php');
 }

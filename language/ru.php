@@ -1,13 +1,14 @@
 <?php
 
 return [
-    'error_login'           => 'Логин или пароль неверные',
-    'error_incorrect_login' => 'Логин должен содержать только буквы A-Z и цифры',
-    'error_invalid_email'   => 'Некорректный email адрес',
+    'error_login'           => 'Логин(email) или пароль неверные',
+    'error_login_invalid'   => 'Логин должен содержать только буквы A-Z и цифры, и не может быть пустым',
+    'error_email_invalid'   => 'Некорректный email адрес',
     'error_password_length' => 'Пароль должен содержать минимум 6 символов',
     'error_password_match'  => 'Пароли не совпадают',
     'error_login_exists'    => 'Данный логин уже существует',
     'error_email_exists'    => 'Данный email уже существует',
+    'error_went_wrong'      => 'Упс, что-то пошло не так!',
     'create_account'        => 'Ещё не зарегестрированы? <a href="register.php">Создайте аккаунт.</a>',
     'enter_password'        => 'Введите пароль:',
     'enter_login_or_email'  => 'Введите логин или email:',
@@ -22,5 +23,6 @@ return [
     'already_registered'    => 'Уже зарегестрированы? <a href="login.php">Войдите.</a>',
     'select_language'       => 'Выберите язык',
     'en'                    => 'Английский',
-    'ru'                    => 'Русский'
+    'ru'                    => 'Русский',
+    'success_registration'  => 'Вы успешно зарегестрировались'
 ];

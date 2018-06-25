@@ -33,7 +33,7 @@ function add_user($db, $user) {
         throw new Exception('One or more fields are empty.');
     }
     $stmt = mysqli_prepare($db, 'INSERT INTO users(login, email, password, avatar) VALUES (?, ?, ?, ?)');
-    if(!empty($_FILES['avatar'])) {
+    if(!empty($_FILES['avatar']) && !empty($_FILES['avatar']['tmp_name'])) {
         $image_name = image_upload($_FILES['avatar']);
     } else {
         $image_name = '';

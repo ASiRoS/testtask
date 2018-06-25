@@ -1,8 +1,7 @@
 <?php
 
 function check_login($login) {
-    return (preg_match("/^[a-zA-Z1-9]*$/", $login));
-
+    return (strlen($login) >= 4 && preg_match("/^[a-zA-Z1-9]*$/", $login));
 }
 
 function login_exists($db, $login) {

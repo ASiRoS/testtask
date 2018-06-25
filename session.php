@@ -20,3 +20,9 @@ function return_message($msg) {
     }
     return '';
 }
+
+function clear_error() {
+    if(!empty($_SESSION['errors'])) {
+        unset($_SESSION['errors']);
+    }
+}

@@ -13,7 +13,7 @@ function image_upload($image) {
     $upload_folder = "upload/";
 
     if(!is_image($image)) {
-        return false;
+        return null;
     }
 
     $image_type = strtolower(pathinfo($image['name'],PATHINFO_EXTENSION));
