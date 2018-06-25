@@ -44,3 +44,20 @@ function add_user($db, $user) {
     mysqli_stmt_close($stmt);
     return $is_success;
 }
+
+function get_user_avatar_by_login($login) {
+    $db = connect();
+    $sql = "SELECT avatar FROM users WHERE login=?";
+    $avatar = '';
+
+
+    $stmt = mysqli_prepare($db, $sql);
+    mysqli_stmt_bind_param($stmt, 's', $login);
+    mysqli_stmt_execute($stmt);
+    mysqli_stmt_bind_result($stmt, $avatar);
+    if(!mysqli_stmt_fetch($stmt)) {
+        return '';
+    }
+    mysqli_stmt_close($stmt);
+    return $avatar;
+}

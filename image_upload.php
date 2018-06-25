@@ -20,7 +20,7 @@ function image_upload($image) {
 
     do {
         $image_name = generate_image_name($image_type);
-        $image_path = $upload_folder . generate_image_name($image_type);
+        $image_path = $upload_folder . $image_name;
     } while (file_exists($image_path));
 
     if($image["size"] > 500000) {

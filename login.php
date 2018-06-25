@@ -3,6 +3,9 @@
 <?php if(is_logged_in()): ?>
 <p><?=get_translate('logged_in')?> <?=$_SESSION['login']?></p>
 <a href="logout.php"><?=get_translate('logout')?></a>
+<div class="avatar mt-3">
+    <img src="<?=UPLOAD_FOLDER.get_user_avatar_by_login($_SESSION['login'])?>" alt="avatar" width="150" height="150">
+</div>
 <? else: ?>
 <form class="col-md-3 border rounded" action="login-handler.php" method="post">
     <fieldset class="form-group">
